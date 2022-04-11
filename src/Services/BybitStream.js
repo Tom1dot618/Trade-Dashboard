@@ -99,10 +99,10 @@ class BybitStream {
       //--- log
       if (DEBUG) {
         //--- TOPIC
-        if (topic != undefined) {
+        if (topic !== undefined) {
           console.log(topic.toUpperCase());
           //--- DATA
-          if (data != undefined) {
+          if (data !== undefined) {
             console.log(data);
           }
           //---- NO DATA
@@ -114,7 +114,7 @@ class BybitStream {
         //--- NO TOPIC <PONG>
         else {
           const returnMessage = message.ret_msg;
-          if (returnMessage != undefined) {
+          if (returnMessage !== undefined) {
             console.log(`\n<${returnMessage}>`);
             return;
           }
