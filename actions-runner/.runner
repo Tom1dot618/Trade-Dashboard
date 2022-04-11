@@ -1,0 +1,9 @@
+﻿{
+  "agentId": 2,
+  "agentName": "MacBookPro",
+  "poolId": 1,
+  "poolName": "Default",
+  "serverUrl": "https://pipelines.actions.githubusercontent.com/vYrqQMmRubumXuKsDNRGYtZXhl8XARi74GS4YXKuTVjwBfSCAH",
+  "gitHubUrl": "https://github.com/Tom1dot618/trade-dashboard",
+  "workFolder": "_work"
+}
