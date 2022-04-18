@@ -1,25 +1,46 @@
 import { makeAutoObservable } from "mobx";
-import BybitStream from "../Services/BybitStream";
-import Trades from "./Trades";
+import Bybit from "../Enums/Bybit/Bybit";
+import ByBitStreamTopics from "../Enums/Bybit/BybitStreamTopics";
+import BybitTradingPair from "../Enums/Bybit/BybitTradingPairs";
+import Message from "../Models/Message";
+import Subscriptions from "../Models/Subscriptions";
+import StreamService from "../Services/StreamService";
+import PairTrades from "./Trade/PairTrades";
 
 class Store {
-  trades: Trades = new Trades();
-  stream: BybitStream;
+  pairTrades: PairTrades = new PairTrades();
+  subscriptions: Subscriptions = new Subscriptions();
 
   constructor() {
-    const PAIR = "BTCUSD";
-    //const ORDERBOOK_2_25 = "orderBookL2_25";
-    const TRADE = "trade";
-
-    let subscriptions = [];
-    subscriptions.push(TRADE, PAIR);
-    //subscriptions.push(ORDERBOOK_2_25);
-
-    //--- init websockets
-    this.stream = new BybitStream(subscriptions, this);
-
     makeAutoObservable(this);
+
+    //--- BTCUSD
+    this.subscriptions.add(BybitTradingPair.BTCUSD, ByBitStreamTopics.TRADE);
+    this.pairTrades.addPair(BybitTradingPair.BTCUSD);
+
+    //--- ETHUSD
+    this.subscriptions.add(BybitTradingPair.ETHUSD, ByBitStreamTopics.TRADE);
+    this.pairTrades.addPair(BybitTradingPair.ETHUSD);
+
+    new StreamService(
+      Bybit.PRODUCTIONSTREAMURL,
+      this.subscriptions,
+      this.onMessage
+    );
   }
+
+  onMessage = (message: Message) => {
+    //--- trade message
+    if (message.isTrade) {
+      this.pairTrades.addTrades(message.pair, message.dataItems);
+    }
+    //--- level 2 orderbook message
+    else if (message.isOrderbookLevel2) {
+      //TODO
+    }
+  };
 }
 
-export default new Store();
+const store = new Store();
+
+export default store;

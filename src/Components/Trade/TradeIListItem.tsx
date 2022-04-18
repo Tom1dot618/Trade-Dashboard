@@ -1,9 +1,7 @@
 import React from "react";
-import { observer } from "mobx-react-lite";
-
 import { Typography } from "@mui/material";
 
-const Trade = () => {
+const TradeIListItem = () => {
   return (
     <div className="Trade">
       <Typography>Trade</Typography>
@@ -11,4 +9,4 @@ const Trade = () => {
   );
 };
 
-export default observer(Trade);
+export default TradeIListItem;

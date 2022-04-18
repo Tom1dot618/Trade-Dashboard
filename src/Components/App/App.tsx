@@ -1,19 +1,28 @@
-import { Box } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
+import MarketOrdersView from "./MarketOrdersView";
+import store from "../../Stores/Store";
 import { observer } from "mobx-react-lite";
-import Dashboard from "../Dashboard/Dashboard";
 
-import "./App.css";
-
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Box width="300px">
-          <Dashboard />
-        </Box>
-      </header>
-    </div>
+    <Grid container margin="20px">
+      <Grid item xs={12}>
+        <Typography fontWeight="bold" variant="h6" color="white" gutterBottom>
+          Market trades
+        </Typography>
+      </Grid>
+
+      <>
+        {store.pairTrades.items.forEach((pairTrades, index) => {
+          console.log(store.pairTrades.items[0].count);
+        })}
+      </>
+
+      <Grid item xs={4}>
+        <MarketOrdersView trades={store.pairTrades.items[0]} />
+      </Grid>
+    </Grid>
   );
-}
+};
 
 export default observer(App);

@@ -1,13 +1,17 @@
 import { makeAutoObservable } from "mobx";
+import TradeSide from "../../Enums/TradeSide";
 import Trade from "./Trade";
 
 class Trades {
-  items: Array<Trade> = [];
-  buyItems: Array<Trade> = [];
-  sellItems: Array<Trade> = [];
+  pair: string = "";
+  items: Trade[] = [];
+  buyItems: Trade[] = [];
+  sellItems: Trade[] = [];
 
-  constructor() {
+  constructor(pair: string) {
     makeAutoObservable(this);
+
+    this.pair = pair;
   }
 
   get count(): number {
@@ -38,14 +42,17 @@ class Trades {
     return this.buyVolume / this.buyCount;
   }
 
-  add(side: string, time: string, size: number, price: number) {
-    this.items.push(new Trade(side, time, size, price));
+  add(side: string, time: string, size: number, price: number): Trade {
+    const trade: Trade = new Trade(side, time, size, price);
+    this.items.push(trade);
 
-    if (side === "Buy") {
-      this.buyItems.push(new Trade("Buy", time, size, price));
-    } else if (side === "Sell") {
-      this.sellItems.push(new Trade("Sell", time, size, price));
+    if (side === TradeSide.BUY) {
+      this.buyItems.push(new Trade(TradeSide.BUY, time, size, price));
+    } else if (side === TradeSide.SELL) {
+      this.sellItems.push(new Trade(TradeSide.SELL, time, size, price));
     }
+
+    return trade;
   }
 }
 
