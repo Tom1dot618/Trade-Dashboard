@@ -9,8 +9,6 @@ class Message {
   constructor(event: any) {
     const message = JSON.parse(event.data);
 
-    console.log(event);
-
     this.topic = message.topic;
     this.pair = message.topic.split(".")[1];
     this.type = message.topic.split(".")[0];

@@ -22,11 +22,27 @@ class Store {
     this.subscriptions.add(BybitTradingPair.ETHUSD, ByBitStreamTopics.TRADE);
     this.pairTrades.addPair(BybitTradingPair.ETHUSD);
 
+    //--- LUNAUSD
+    this.subscriptions.add(BybitTradingPair.LUNAUSD, ByBitStreamTopics.TRADE);
+    this.pairTrades.addPair(BybitTradingPair.LUNAUSD);
+
     new StreamService(
       Bybit.PRODUCTIONSTREAMURL,
       this.subscriptions,
       this.onMessage
     );
+  }
+
+  get windwowInnerHeight(): number {
+    return window.innerHeight;
+  }
+
+  get windowInnerHeight(): number {
+    return window.innerHeight;
+  }
+
+  get maxNumberOfMessagesPerColumn(): number {
+    return Math.floor((this.windwowInnerHeight - 350) / 20);
   }
 
   onMessage = (message: Message) => {

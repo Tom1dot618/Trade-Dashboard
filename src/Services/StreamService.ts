@@ -42,7 +42,9 @@ class StreamService {
 
     //================== onMessage ======================
     webSocket.onmessage = function (event: any) {
-      onMessage(new Message(event));
+      if (JSON.parse(event.data).hasOwnProperty("topic")) {
+        onMessage(new Message(event));
+      }
     };
   }
 }

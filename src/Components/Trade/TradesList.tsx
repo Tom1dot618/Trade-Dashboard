@@ -4,6 +4,7 @@ import { Grid, Typography } from "@mui/material";
 import { blueGrey, green, red } from "@mui/material/colors";
 import NumberUtils from "../../Utils/number-utils";
 import Trades from "../../Stores/Trade/Trades";
+import store from "../../Stores/Store";
 
 const TradesList = ({ trades }: { trades: Trades }) => {
   return (
@@ -11,7 +12,7 @@ const TradesList = ({ trades }: { trades: Trades }) => {
       {trades.items
         .slice(0)
         .reverse()
-        .slice(0, 30)
+        .slice(0, store.maxNumberOfMessagesPerColumn)
         .map((trade, index) => (
           <Grid container spacing={0} key={index}>
             <Grid item xs={4}>
