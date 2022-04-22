@@ -17,6 +17,44 @@ class Trades {
   get count(): number {
     return this.buyItems.length + this.sellItems.length;
   }
+  get lastPrice(): number {
+    if (this.count > 0) {
+      return this.items[this.count - 1].price;
+    } else {
+      return 0;
+    }
+  }
+
+  get previousLastPrice(): number {
+    if (this.count > 1) {
+      return this.items[this.count - 2].price;
+    } else {
+      return 0;
+    }
+  }
+
+  get priceChange(): number {
+    return this.lastPrice - this.previousLastPrice;
+  }
+
+  get priceDirecttion(): TradeSide {
+    if (this.lastPrice > this.previousLastPrice) {
+      return TradeSide.Buy;
+    } else if (this.lastPrice < this.previousLastPrice) {
+      return TradeSide.Sell;
+    }
+    return TradeSide.Buy;
+  }
+
+  get lastSide(): TradeSide {
+    if (this.count > 0) {
+      return this.items[this.count - 1].side === "Buy"
+        ? TradeSide.Buy
+        : TradeSide.Sell;
+    } else {
+      return TradeSide.Buy;
+    }
+  }
 
   get sellCount(): number {
     return this.sellItems.length;
@@ -46,10 +84,10 @@ class Trades {
     const trade: Trade = new Trade(side, time, size, price);
     this.items.push(trade);
 
-    if (side === TradeSide.BUY) {
-      this.buyItems.push(new Trade(TradeSide.BUY, time, size, price));
-    } else if (side === TradeSide.SELL) {
-      this.sellItems.push(new Trade(TradeSide.SELL, time, size, price));
+    if (side === TradeSide.Buy) {
+      this.buyItems.push(new Trade(TradeSide.Buy, time, size, price));
+    } else if (side === TradeSide.Sell) {
+      this.sellItems.push(new Trade(TradeSide.Sell, time, size, price));
     }
 
     return trade;

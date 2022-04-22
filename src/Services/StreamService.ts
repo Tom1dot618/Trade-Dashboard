@@ -1,6 +1,6 @@
-import Subscriptions from "../Models/Subscriptions";
-import Subscription from "../Models/Subscription";
-import Message from "../Models/Message";
+import Message from "../Stores/Subscription/Message";
+import Subscription from "../Stores/Subscription/Subscription";
+import Subscriptions from "../Stores/Subscription/Subscriptions";
 
 //===================== WEBSERVICE ================================
 
